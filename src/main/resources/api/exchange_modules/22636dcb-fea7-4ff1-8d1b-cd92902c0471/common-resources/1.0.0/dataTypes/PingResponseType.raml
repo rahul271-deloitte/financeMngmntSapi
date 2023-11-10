@@ -1,0 +1,21 @@
+#%RAML 1.0 DataType
+
+displayName: PingResponseType
+description:  A standard response structure for API health check
+
+properties:
+  status:
+    description: Describes the overall status of the API. When dependency checks are included, the status identifies whether the API is functional (Running), or API is down (Unavailable).
+    type: string
+    enum: [ "Running", "Unavailable" ]
+  apiName:
+    description: Asset name of the API returning the response
+    type: string
+    maxLength: 128
+  apiVersion: 
+    description: Complete version of the API returning the response; format is major.minor.patch
+    type: string
+    minLength: 5
+    maxLength: 11
+  timestamp:
+    type: datetime

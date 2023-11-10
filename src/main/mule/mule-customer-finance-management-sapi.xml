@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+    <flow name="mule-customer-finance-management-sapi-main">
+        <http:listener path="/api/*" config-ref="httpListenerConfig">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="mule-customer-finance-management-sapi-config"/>
+    </flow>
+    <flow name="put:\accounts\(accountId):application\json:mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="accountId">attributes.uriParams.'accountId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="put:\customers\(customerId):application\json:mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="customerId">attributes.uriParams.'customerId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="put:\transactions\(transactionId):application\json:mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="transactionId">attributes.uriParams.'transactionId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="delete:\accounts\(accountId):mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="accountId">attributes.uriParams.'accountId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="delete:\customers\(customerId):mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="customerId">attributes.uriParams.'customerId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="delete:\transactions\(transactionId):mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="transactionId">attributes.uriParams.'transactionId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\accounts\(accountId):mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="accountId">attributes.uriParams.'accountId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\customers\(customerId):mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="customerId">attributes.uriParams.'customerId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\transactions\(transactionId):mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="transactionId">attributes.uriParams.'transactionId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\ping:mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\accounts:application\json:mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\customers:application\json:mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\transactions:application\json:mule-customer-finance-management-sapi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  errorCode: "400",
+  errorMessage: "Invalid request message",
+  transactionId: "dd960082-abbf-47c2-8c65-f18eeb35848b",
+  timeStamp: "2019-09-30T15:27:49.274Z"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+</mule>

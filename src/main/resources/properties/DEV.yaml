@@ -1,0 +1,39 @@
+api:
+ name: "mule-banking-mambu-loan-management-sapi"
+ version: "v1"
+ autodiscoveryID: "18592062"
+
+https:
+ listener:
+  host: "0.0.0.0"
+  port: "8082"
+  timeout: "3000"
+  path: "/api/v1/*"
+ requester:
+  host: "deloitteusa.sandbox.mambu.com"
+  basePath: "/api/loans"
+  getSchedule: "/schedule"
+  createUnsecLoan: ""
+  createLineOfCredit: ""
+  disbursementLoan: "/disbursement-transactions"
+  changeState: "/changeState"
+  frequency: "2000"
+  reconnectionAttemp: "20" 
+  responseTimeout: "190000"
+  responseBuffer: "1024"
+  response: "50000"
+  port: "8082"
+  maxConnections: "-1"
+  protocol: "HTTPS"
+  contentType: "application/json"
+  accept: "application/vnd.mambu.v2+json"
+
+
+tls:
+  path: "certs/keystore.jks"
+  name: "TLS_Context"
+  type: "jks"
+
+notification:
+  workStream: "Digital Banking"
+  type: "EMAIL"

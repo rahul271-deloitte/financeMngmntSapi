@@ -1,0 +1,12 @@
+{
+  "transaction": {
+    "type": "deposit",
+    "amount": 500.00,
+    "date": "2023-11-09T14:30:00Z",
+    "account_details": {
+      "account_type": "Savings",
+      "account_number": "1234567890",
+      "currency": "USD"
+    }
+  }
+}

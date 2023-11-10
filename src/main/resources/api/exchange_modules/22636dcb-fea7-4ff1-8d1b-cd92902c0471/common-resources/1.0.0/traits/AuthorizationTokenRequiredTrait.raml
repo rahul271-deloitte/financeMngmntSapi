@@ -1,0 +1,13 @@
+#%RAML 1.0 Trait
+
+headers:
+  Authorization:
+    type: string
+    example: Bearer NOaCOnW_0ioCJwEYq0-6PujyWP69oJnDz0Qwlx6OwlzaenrxHaqtzmkZYiQOPBUdRaYLbH-a3GigkUwzc-YlSw
+
+responses:
+  401:
+    body:
+      application/json:
+        type: !include ../dataTypes/ErrorResponseType.raml
+        example: !include ../examples/Return401ExampleOauth.raml

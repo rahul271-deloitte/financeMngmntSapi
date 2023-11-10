@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+    <http:listener-config name="httpListenerConfig" doc:name="HTTP Listener config" doc:id="a7269a77-8c11-46fa-9282-bcc98067c220">
+        <http:listener-connection host="${https.listener.host}" port="${https.listener.port}" tlsContext="${tls.name}" protocol="HTTPS" />
+    </http:listener-config>
+    <tls:context name="TLS_Context" doc:name="TLS Context" doc:id="72e3c060-bd82-466a-8b64-c0878ce3a9db">
+        <tls:key-store path="${tls.path}" keyPassword="${secure::tls.password}" password="${secure::tls.password}" type="${tls.type}" />
+    </tls:context>
+    <!-- <import doc:name="Import" doc:id="38c4d0c9-a216-4ec9-9c43-133dfb5f0f67" file="sendNotificationsImpl.xml" />
+    <import doc:name="Import" doc:id="e6ba97f1-dfd5-49f8-bf6d-7d7e0ea3723e" file="globalCommonImpl.xml" /> -->
+    <http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="a5fa2584-f633-44ea-8028-53229e053aac" basePath="${https.requester.basePath}" responseTimeout="${https.requester.response}" >
+		<http:request-connection host="${https.requester.host}" protocol="${https.requester.protocol}" maxConnections="${https.requester.maxConnections}" connectionIdleTimeout="${https.requester.responseTimeout}" responseBufferSize="${https.requester.responseBuffer}" >
+			<reconnection >
+				<reconnect frequency="${https.requester.frequency}" count="${https.requester.reconnectionAttemp}" />
+			</reconnection>
+		</http:request-connection>
+		<http:default-headers >
+			<http:default-header key="Authorization" value="${secure::https.requester.authorization}" />
+			<http:default-header key="Accept" value="${https.requester.accept}" />
+		</http:default-headers>
+	</http:request-config>
+    <json-logger:config name="JSON_Logger_Config" doc:name="JSON Logger Config" doc:id="233ad62f-919b-40f2-b562-0e02911de351" applicationName="${api.name}" applicationVersion="${api.version}" environment="${mule.env}" disabledFields="content"/>
+	<configuration-properties doc:name="Configuration properties" doc:id="0fd7854c-1e83-4c55-b607-15f3c7d85914" file="properties/${mule.env}.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="b68feb0d-cd1f-4fa3-bdd5-c2ed396af546" file="properties/${mule.env}-secure.yaml" key="${encryptionKey}"/>
+    <apikit:config name="mule-customer-finance-management-sapi-config" api="mule-customer-finance-management-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+</mule>

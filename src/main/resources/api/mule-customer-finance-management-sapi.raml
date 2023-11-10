@@ -1,0 +1,182 @@
+#%RAML 1.0
+title: Customer Finance Management System API
+version: v1
+description: This system API will allow the user to perform CRUD operations on Customers/Accounts/Transactions by customer requirements.
+
+protocols:
+- HTTPS
+- HTTP
+
+mediaType: 
+- application/json
+
+uses:
+  CommonResources: /exchange_modules/22636dcb-fea7-4ff1-8d1b-cd92902c0471/common-resources/1.0.0/common-resources.raml
+
+types:
+  getTransactionDetails: !include /dataTypes/getTransactionDetailsDataType.raml
+  getAccountsDetails: !include /examples/getAccountsExample.json
+  getCustomersDetails: !include /dataTypes/getCustomersDetailsDataType.raml
+  putCustomersRequest: !include /examples/putCustomersRequestExample.json
+  putCustomersResponse: !include /dataTypes/putAccountsResDataType.raml
+  postTransactionReq: !include /dataTypes/postTransactionReqDataType.raml
+  postTransactionRes: !include /dataTypes/postTransactionResDataType.raml
+  putTransactionReq: !include /dataTypes/putTransactionReqDataType.raml
+  putTransactionRes: !include /dataTypes/postTransactionResDataType.raml
+  postCustomersResponse: !include /dataTypes/postCustomersResponseDataType.raml
+  postCustomersRequest: !include /dataTypes/postCustomersRequestDataType.raml
+  putAccountsRequest: !include /dataTypes/putAccountsReqDataType.raml
+  putAccountsResponse: !include /dataTypes/putAccountsResDataType.raml
+  deleteCustomersResponse: !include /dataTypes/deleteCustomersResDataType.raml
+  deleteAccountsResponse: !include /dataTypes/deleteAccountsResDataType.raml
+  deleteTransactionRes: !include /dataTypes/deleteTransactionResDataType.raml
+  postAccountsRequest: !include /dataTypes/postAccountsReqDataType.raml
+  postAccountsResponse: !include /dataTypes/postAccountsResDataType.raml
+
+
+/ping:
+  displayName: API Health Check
+  description:  Get the current Health Status of this API
+  get:
+    displayName:  API Status
+    description:  Get the current Health Status of this API
+    is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+
+/customers:
+  description: Fetch, update, create, delete operations on customers. 
+  post:
+    displayName: Create customer
+    description: Creating new customer
+    is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+    body:
+      application/json:
+        type: postCustomersRequest
+    responses:
+      201:
+        body:
+          application/json:
+            type: postCustomersResponse
+  /{customerId}:
+    get:
+      displayName: Fetch customer by Id
+      description: Fetching customer by Id
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      responses:
+        200:
+          body:
+            application/json:
+              type: getCustomersDetails
+    put:
+      description: updating customer details
+      displayName: Update customer
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      body:
+        application/json:
+          type: putCustomersRequest
+      responses:
+        201:
+          body:
+            application/json:
+              type: putCustomersResponse
+    delete:
+      description: Deleting the customer by customerId
+      displayName: Delete customer
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      responses:
+        200:
+          body:
+            application/json:
+              type: deleteCustomersResponse
+      
+/accounts:
+  description: Fetch, update, create, delete operations on accounts. 
+  post:
+    displayName: Create account
+    description: Creating new account
+    is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+    body:
+      application/json:
+        type: postAccountsRequest 
+    responses:
+      201:
+        body:
+          application/json:
+            type: postAccountsResponse
+  /{accountId}:
+    get:
+      displayName: Fetch account by Id
+      description: Fetching account by Id
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      responses:
+        200:
+          body:
+            application/json:
+              type: getAccountsDetails
+    put:
+      description: updating account details
+      displayName: Update account
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      body:
+        application/json:
+          type: putAccountsRequest
+      responses:
+        201:
+          body:
+            application/json:
+              type: putAccountsResponse
+    delete:
+      description: Deleting the account by cId
+      displayName: Delete account
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      responses:
+        200:
+          body:
+            application/json:
+              type: deleteAccountsResponse
+      
+/transactions:
+  description: Fetch, update, create, delete operations on transactions. 
+  post:
+    displayName: Create transaction
+    description: Creating new transaction
+    is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+    body:
+      application/json:
+        type: postTransactionReq
+    responses:
+      201:
+        body:
+          application/json:
+            type: postTransactionRes
+  /{transactionId}:
+    get:
+      displayName: Fetch transaction by Id
+      description: Fetching transaction by Id
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      responses:
+        200:
+          body:
+            application/json:
+              type: getTransactionDetails
+    put:
+      description: updating transaction details
+      displayName: Update transaction
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      body:
+        application/json:
+          type: putTransactionReq
+      responses:
+        201:
+          body:
+            application/json:
+              type: putTransactionRes
+    delete:
+      description: Deleting the transaction by Id
+      displayName: Delete transaction
+      is: [CommonResources.trackable,CommonResources.client-id-secret-required, CommonResources.error-responses]
+      responses:
+        200:
+          body:
+            application/json:
+              type: deleteTransactionRes
+   

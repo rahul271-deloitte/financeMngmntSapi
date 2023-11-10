@@ -1,0 +1,9 @@
+#%RAML 1.0 Library
+usage: Provides a collection of common resources, traits and types for use in API Specifications
+ 
+traits:
+  trackable: !include traits/TrackableTrait.raml
+  error-responses: !include traits/ErrorResponsesTrait.raml
+  client-id-secret-required: !include traits/ClientIdSecretRequiredTrait.raml
+  ping: !include traits/PingTraitResponse.raml
+  authorization-token-required: !include traits/AuthorizationTokenRequiredTrait.raml
